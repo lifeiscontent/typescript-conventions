@@ -31,6 +31,45 @@ interface IForm<Values> {
 type MyForm = IForm<{ firstName: string; lastName: string }>;
 ```
 
+use Interface for domain entities, as your domain logic evolves, you might need more complex types that extend the original ideas.
+
+```ts
+type ID = unknown; // shouldn't matter if it's a string or number, you're not doing operations on it.
+
+interface IEntity {
+  id: ID;
+}
+
+interface IPostEntity<TType extends string> extends IEntity {
+  title: string;
+  type: TType;
+}
+
+interface CommentPostEntity extends IPostEntity<"comment"> {
+  comment: string;
+}
+
+interface BlogPostEntity extends IPostEntity<"blog"> {
+  body: string;
+}
+
+interface VideoPostEntity extends IPostEntity<"video"> {
+  videoUrl: string;
+  needsSubscription: boolean;
+}
+
+interface PremiumVideoPostEntity extends VideoPostEntity {
+  needsSubscription: true;
+  tier: number;
+}
+
+type PostEntity =
+  | CommentPostEntity
+  | BlogPostEntity
+  | VideoPostEntity
+  | PremiumVideoPostEntity;
+```
+
 Use an Interface when you want to take advantage of declaration merging.
 
 ```ts
@@ -74,6 +113,8 @@ type Foo = Config;
 //   };
 // }
 ```
+
+for things not outlined above, use a Type.
 
 ## Generics
 
