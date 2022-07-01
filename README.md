@@ -91,7 +91,7 @@ function identity<TValue>(value: TValue): TValue {
 
 When you need to use multiple types, don't repeat yourself and follow the Open Closed Principle.
 
-```ts
+```tsx
 import * as React from "react";
 
 type MyComponentProps = {
