@@ -70,6 +70,21 @@ type PostEntity =
   | PremiumVideoPostEntity;
 ```
 
+if you want to pull a specific type from a union, make sure to have a shared key across all the possible types in the union.
+
+In our example above, each interface has a `type` key, so we'll use that as a key to discriminate between our union values.
+
+
+```ts
+function isBlogPostEntity(entity: PostEntity): entity is BlogPostEntity {
+  return entity.type === 'blog';
+}
+
+const entities: PostEntity[] = [...];
+const blogPostEntities = entities.filter(isBlogPostEntity); // now the type should be BlogPostEntity[];
+```
+
+
 Use an Interface when you want to take advantage of declaration merging.
 
 ```ts
